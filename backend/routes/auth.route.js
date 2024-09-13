@@ -1,19 +1,14 @@
 import express from "express";
+import { signup, login, logout } from "../controllers/auth.controller.js";
+
 
 const router = express.Router();
 
-router.get("/signup", (req, res) => {
-  res.send("Sign up route called");
-});
-
-router.get("/login", (req, res) => {
-    res.send("login route called");
-  });
-
-  router.get("/logout", (req, res) => {
-    res.send("logout route called");
-  });
+router.get("/signup", signup);
+router.get("/login", login);
+router.get("/logout", logout);
 
 export default router;
 
-
+//database pIP address (101.2.190.201)
+// assword - WMjecCL5maR48Fjf
