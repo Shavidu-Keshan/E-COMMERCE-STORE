@@ -11,11 +11,12 @@ const generateToken = (userId) => {
     expiresIn: "7d",
 } )
 
-return{ accessToken, refreshToken }
+return{ accessToken, refreshToken };
 };
 
 const storeRefreshToken = async (userId, refreshToken) => {
-  await redis.set('refresh_token:${userId}', refreshToken, "EX", 60 * 60 * 24 * 7);//7days
+  await redis.set(`refresh_token:${userId}`, refreshToken, "EX", 60 * 60 * 24 * 7);//7days
+  
 }
 
 const setCookies = (res,accessToken,refreshToken) => {
@@ -49,20 +50,46 @@ export const signup = async (req, res) => {
 
     setCookies(res,accessToken,refreshToken);
 
-    res.status(201).json({ user:{
+    res.status(201).json({ 
       id: user._id,
       name: user.name,
       email: user.email,
       role: user.role
-    }, message: "User created successfully" 
+     
     });
   } catch (error) {
+    console.log("Error in signup controller", error.message);
     res.status(500).json({ message: "Something went wrong", error });
   }
 };
 
 export const login = async (req, res) => {
-  res.send("login route called");
+  try {
+    console.log("here run the logggin");
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
+    console.log("here run the logggin2");
+
+    if(user && (await user.comparePasswords(password))){
+      const {accessToken, refreshToken}=generateToken(user._id);
+      console.log("user is logged in");
+      await storeRefreshToken(user._id, refreshToken);
+      setCookies(res,accessToken,refreshToken);
+
+      res.json({ user:{
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }});
+
+    }else{
+      res.status(401).json({message: "Invalid email or password"});
+    }
+  } catch (error) {
+    console.log("Error in login controller", error.message);
+    res.status(500).json({ message: "Something went wrong", error });
+  }
 };
 
 export const logout = async (req, res) => {
@@ -76,6 +103,7 @@ export const logout = async (req, res) => {
     res.clearCookie("refreshToken");
     res.status(200).json({message: "Logged out successfully"});
   }catch(error){
+    console.log("Error in logout controller", error.message);
     res.status(500).json({message: "Server eroor", error:error.message});
 };
 }
