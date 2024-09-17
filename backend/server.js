@@ -16,7 +16,7 @@ app.use(cookieParser());//allow you to parse cookie of the requestt
 
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/cart",cartRoutes)
+app.use("/api/cart",cartRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
