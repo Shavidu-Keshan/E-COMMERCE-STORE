@@ -3,8 +3,10 @@ import HomePage from "./pages/HomePage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import Navbar from "./components/Navbar.jsx";
+import { Toaster } from "react-hot-toast";
+import { useUserStore } from "./stores/useUserStore";
 function App() {
-  
+  const {user} = useUserStore()
 
   return (
     <div className='min-h-screen bg-gray-900 text-white relative overflow-hidden'>
@@ -24,6 +26,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
       </Routes>
       </div>
+      <Toaster />
     </div>
   )
 }
