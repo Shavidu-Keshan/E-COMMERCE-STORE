@@ -16,7 +16,7 @@ import bcrypt from "bcryptjs";
     password:{
         type: String,
         required: [true, "password is required"],
-        minleength: [6, "Password must be at least 6 character long"],
+        minlength: [6, "Password must be at least 6 character long"],
         unique: true,
         
     },
