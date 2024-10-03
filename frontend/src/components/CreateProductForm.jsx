@@ -3,6 +3,8 @@ import React from 'react'
 import { useState } from 'react';
 import { motion } from 'framer-motion'; 
 import { PlusCircle, Upload, Loader } from "lucide-react";
+import { create } from 'zustand';
+import { useProductStore } from '../stores/useProductStore';
 //import { useProductStore } from "../stores/useProductStore";
 
 
@@ -19,11 +21,17 @@ const CreateProductForm = () => {
         category: "",
         image: "",
     });
-    const loading = false;
+   
+    const {createProduct,loading} = useProductStore();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(newProduct);
+        try {
+            await createProduct(newProduct);
+			setNewProduct({ name: "", description: "", price: "", category: "", image: "" });
+        } catch  {
+            console.log("error creating a product");
+        }
     };
 
     const handleImageUpload = (e) => {
