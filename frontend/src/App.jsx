@@ -4,6 +4,7 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import AdminPage from "./pages/AdminPage.jsx";
 import Navbar from "./components/Navbar.jsx";
+import CategoryPage from "./pages/CategoryPage.jsx";
 
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
@@ -17,9 +18,7 @@ function App() {
     checkAuth();
   },[checkAuth]);
 
-  if (checkingAuth) {
-    return <LoadingSpinner />;
-  }
+ 
 
   if (checkingAuth) return <LoadingSpinner />;
 
@@ -43,6 +42,7 @@ function App() {
 						path='/secret-dashboard'
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
 					/>
+        <Route path="/category/:category" element={<CategoryPage />} ></Route> 
       </Routes>
       </div>
       <Toaster />
