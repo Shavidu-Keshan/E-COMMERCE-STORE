@@ -5,7 +5,7 @@ import CartItem from '../components/CartItem';
 import { useCartStore } from '../stores/useCartStore';  
 import PeopleAlsoBought from '../components/PeopleAlsoBought';
 import { Link } from 'react-router-dom';
-
+import OrderSummary from '../components/OrderSummary';
 
 
 const CartPage = () => {
@@ -32,7 +32,7 @@ const CartPage = () => {
 						{cart.length > 0 && <PeopleAlsoBought />}
 					</motion.div>
 
-					{/* {cart.length > 0 && (
+					{cart.length > 0 && (
 						<motion.div
 							className='mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full'
 							initial={{ opacity: 0, x: 20 }}
@@ -40,9 +40,9 @@ const CartPage = () => {
 							transition={{ duration: 0.5, delay: 0.4 }}
 						>
 							<OrderSummary />
-							<GiftCouponCard />
+							{/* <GiftCouponCard /> */}
 						</motion.div>
-					)} */}
+					)}
 				</div>
 			</div>
 		</div>
