@@ -6,6 +6,7 @@ import AdminPage from "./pages/AdminPage.jsx";
 import Navbar from "./components/Navbar.jsx";
 import CategoryPage from "./pages/CategoryPage.jsx";
 import CartPage from "./pages/CartPage.jsx";
+import PurchaseSuccessPage from "./pages/PurchaseSuccessPage.jsx";
 
 import { Toaster } from "react-hot-toast";
 import { useUserStore } from "./stores/useUserStore";
@@ -51,7 +52,11 @@ function App() {
 						element={user?.role === "admin" ? <AdminPage /> : <Navigate to='/login' />}
 					/>
         <Route path="/category/:category" element={<CategoryPage />} ></Route> 
-        <Route path="/cart" element={user ?<CartPage /> : <Navigate to="/login" />} ></Route> 
+        <Route path="/cart" element={user ?<CartPage /> : <Navigate to="/login" />} ></Route>
+        <Route
+						path='/purchase-success'
+						element={user ? <PurchaseSuccessPage /> : <Navigate to='/login' />}
+					/> 
       </Routes>
       </div>
       <Toaster />
